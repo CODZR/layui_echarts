@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+
+<body>
+<!-- 下面是地图区 -->
+<div id="main" class="layui-main" style="height:600px;"></div>
+
+<!-- 下面是表头部分 -->
+<div class="layui-main layui-nav">
+  <div class="layui-row" style="height: 30px; line-height: 30px;">
+<!--    col总共有12列，自适应屏幕大小。md*，代表占*/12-->
+    <div class="layui-col-md4">地区</div>
+    <div class="layui-col-md2">累计确诊</div>
+    <div class="layui-col-md2">最新确诊</div>
+    <div class="layui-col-md2">治愈</div>
+    <div class="layui-col-md2">死亡</div>
+  </div>
+</div>
+
+<!-- 下面是内容区 -->
+<div class="layui-main">
+  <div id="view" class="layui-collapse" lay-accordion></div>
+</div>
+
+<script defer src="scripts/echarts.min.js"></script>
+<script defer src="scripts/china.js"></script>
+<script src="scripts/jquery-2.2.4.min.js"></script>
+<script defer src="scripts/map.js"></script>
+<script defer src="layui/layui.js"></script>
+<script defer src="scripts/data.js"></script>
+<script defer src="scripts/main.js"></script>
+<script defer id="laytpl_demo" type="text/html">
+{{#  layui.each(d.newslist, function(index, item){ }}
+  <div class="layui-colla-item layui-row">
+    <h2 class="layui-colla-title">
+      <span class="layui-col-md4">{{ item.provinceName }}</span>
+      <span class="layui-col-md2">{{item.confirmedCount}}</span>
+      <span class="layui-co-md2">{{item.currentConfirmedCount}}</span>
+      <span class="layui-col-md2">{{item.curedCount}}</span>
+      <span class="layui-col-md2">{{item.deadCount}}</span>
+    </h2>
+    <div class="layui-colla-content">
+      <!-- // 某个省的市，比如武汉、孝感、潜江。。。 -->
+      <table class="layui-table" lay-skin="nob">
+        <colgroup>
+          <col width="370">
+          <col width="180">
+          <col width="180">
+          <col width="180">
+          <col>
+        </colgroup>
+        <tbody>
+        {{# layui.each(item.cities, function (i, e) {}}
+        <tr>
+          <td>{{e.cityName}}</td>
+          <td>{{e.confirmedCount}}</td>
+          <td>{{e.currentConfirmedCount}}</td>
+          <td>{{e.curedCount}}</td>
+          <td>{{e.deadCount}}</td>
+        </tr>
+        {{# }); }}
+        
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {{#  }); }}
+</script>
+</body>
+
+</html>
